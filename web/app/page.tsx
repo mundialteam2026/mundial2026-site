@@ -17,14 +17,14 @@ export default function Home() {
       {/* Hero */}
       <main className="flex flex-col items-center justify-center flex-1 text-center px-8 py-24 gap-6">
         <div className="text-xs tracking-widest text-[#FBBF24] uppercase">
-          World Cup 2026 — Africa Edition
+          World Cup 2026 
         </div>
         <h2 className="text-5xl font-bold text-white leading-tight">
           Suis les stats de <br />
           <span className="text-[#FBBF24]">tes joueurs africains</span>
         </h2>
         <p className="text-white/50 max-w-md text-lg">
-          Buts, passes décisives, cartons — toutes les statistiques en temps réel pour la Coupe du Monde 2026.
+          Buts, passes décisives, cartons, toutes les statistiques en temps réel pour la Coupe du Monde 2026.
         </p>
         <button className="mt-4 bg-[#FBBF24] text-black font-semibold px-8 py-3 rounded-full hover:bg-yellow-400 transition">
           Découvrir les joueurs
