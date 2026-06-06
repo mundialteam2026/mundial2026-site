@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   const joueurs = [
@@ -27,26 +28,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white font-sans">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0B0B0B]/90 backdrop-blur border-b border-white/10">
-        <Link href="/">
-          <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "40px", width: "auto" }} />
-        </Link>
-        <div className="hidden md:flex gap-8 text-sm text-white/50">
-          <Link href="/joueurs" className="hover:text-[#FBBF24] transition">Joueurs</Link>
-          <Link href="/equipes" className="hover:text-[#FBBF24] transition">Équipes</Link>
-          <Link href="/classement" className="hover:text-[#FBBF24] transition">Classement</Link>
-          <Link href="/matchs" className="hover:text-[#FBBF24] transition">Matchs</Link>
-        </div>
-        <div className="flex gap-3">
-          <Link href="/inscription" className="text-white/50 text-sm font-bold px-5 py-2 rounded-full border border-white/10 hover:border-white/30 transition">
-            S'inscrire
-          </Link>
-          <Link href="/login" className="bg-[#FBBF24] text-black text-sm font-bold px-5 py-2 rounded-full hover:bg-yellow-300 transition">
-            Connexion
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* HERO */}
       <section className="pt-32 pb-20 px-8 text-center flex flex-col items-center gap-6">

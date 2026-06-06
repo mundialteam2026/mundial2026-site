@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 
 const joueurs = [
   { id: 1, nom: "Sébastien Haller", pays: "Côte d'Ivoire", flag: "🇨🇮", poste: "Attaquant", buts: 4, passes: 2, cartons: 1, minutes: 382, tirs: 14, photo: "SH", club: "Dortmund" },
@@ -70,22 +71,7 @@ export default function Joueurs() {
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white font-sans">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0B0B0B]/90 backdrop-blur border-b border-white/10">
-        <Link href="/">
-          <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "40px", width: "auto" }} />
-        </Link>
-        <div className="hidden md:flex gap-8 text-sm text-white/50">
-          <Link href="/joueurs" className="text-[#FBBF24]">Joueurs</Link>
-          <Link href="/equipes" className="hover:text-[#FBBF24] transition">Équipes</Link>
-          <Link href="/classement" className="hover:text-[#FBBF24] transition">Classement</Link>
-          <Link href="/matchs" className="hover:text-[#FBBF24] transition">Matchs</Link>
-        </div>
-        <div className="flex gap-3">
-          <Link href="/inscription" className="text-white/50 text-sm font-bold px-5 py-2 rounded-full border border-white/10 hover:border-white/30 transition">S'inscrire</Link>
-          <Link href="/login" className="bg-[#FBBF24] text-black text-sm font-bold px-5 py-2 rounded-full hover:bg-yellow-300 transition">Connexion</Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* HERO */}
       <section className="pt-32 pb-12 px-8 max-w-5xl mx-auto">
@@ -206,11 +192,7 @@ export default function Joueurs() {
             className="bg-[#111827] border border-white/10 rounded-3xl p-8 max-w-md w-full relative"
             onClick={e => e.stopPropagation()}
           >
-            <button
-              onClick={() => setJoueurSelectionne(null)}
-              className="absolute top-4 right-4 text-white/30 hover:text-white text-2xl"
-            >✕</button>
-
+            <button onClick={() => setJoueurSelectionne(null)} className="absolute top-4 right-4 text-white/30 hover:text-white text-2xl">✕</button>
             <div className="flex items-center gap-4 mb-6">
               <div className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center text-3xl font-black text-white/30">
                 {joueurSelectionne.photo}
@@ -221,7 +203,6 @@ export default function Joueurs() {
                 <div className="text-white/40 text-sm">{joueurSelectionne.flag} {joueurSelectionne.pays} · {joueurSelectionne.club}</div>
               </div>
             </div>
-
             <div className="grid grid-cols-3 gap-3 mb-6">
               <div className="bg-black/30 rounded-2xl p-4 text-center">
                 <div className="text-[#FBBF24] font-black text-3xl">{joueurSelectionne.buts}</div>
@@ -236,7 +217,6 @@ export default function Joueurs() {
                 <div className="text-white/40 text-xs">Cartons</div>
               </div>
             </div>
-
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-black/30 rounded-xl p-3 flex justify-between items-center">
                 <span className="text-white/40 text-sm">⏱ Minutes</span>
@@ -247,7 +227,6 @@ export default function Joueurs() {
                 <span className="font-bold">{joueurSelectionne.tirs}</span>
               </div>
             </div>
-
             <div className="mt-4">
               <div className="text-white/30 text-xs mb-2 uppercase tracking-widest">Précision tirs</div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
@@ -260,7 +239,6 @@ export default function Joueurs() {
                 {joueurSelectionne.tirs > 0 ? Math.round(joueurSelectionne.buts / joueurSelectionne.tirs * 100) : 0}%
               </div>
             </div>
-
           </div>
         </div>
       )}

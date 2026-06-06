@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 
 const matchs = [
   {
@@ -108,22 +109,7 @@ export default function Matchs() {
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white font-sans">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0B0B0B]/90 backdrop-blur border-b border-white/10">
-        <Link href="/">
-          <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "40px", width: "auto" }} />
-        </Link>
-        <div className="hidden md:flex gap-8 text-sm text-white/50">
-          <Link href="/joueurs" className="hover:text-[#FBBF24] transition">Joueurs</Link>
-          <Link href="/equipes" className="hover:text-[#FBBF24] transition">Équipes</Link>
-          <Link href="/classement" className="hover:text-[#FBBF24] transition">Classement</Link>
-          <Link href="/matchs" className="text-[#FBBF24]">Matchs</Link>
-        </div>
-        <div className="flex gap-3">
-          <Link href="/inscription" className="text-white/50 text-sm font-bold px-5 py-2 rounded-full border border-white/10 hover:border-white/30 transition">S'inscrire</Link>
-          <Link href="/login" className="bg-[#FBBF24] text-black text-sm font-bold px-5 py-2 rounded-full hover:bg-yellow-300 transition">Connexion</Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* HERO */}
       <section className="pt-32 pb-12 px-8 max-w-5xl mx-auto">
@@ -167,9 +153,7 @@ export default function Matchs() {
               key={f}
               onClick={() => setFiltre(f)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition border
-                ${filtre === f
-                  ? "bg-[#FBBF24] text-black border-[#FBBF24]"
-                  : "bg-white/5 text-white/50 border-white/10 hover:border-white/30"}`}
+                ${filtre === f ? "bg-[#FBBF24] text-black border-[#FBBF24]" : "bg-white/5 text-white/50 border-white/10 hover:border-white/30"}`}
             >
               {f === "En direct" && <span className="inline-block w-2 h-2 bg-[#16A34A] rounded-full mr-2 animate-pulse"></span>}
               {f}
@@ -187,15 +171,9 @@ export default function Matchs() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {live.map(m => (
-              <div
-                key={m.id}
-                onClick={() => setMatchOuvert(m)}
-                className="bg-[#16A34A]/10 border border-[#16A34A]/30 rounded-2xl p-6 cursor-pointer hover:-translate-y-1 transition-all duration-300"
-              >
+              <div key={m.id} onClick={() => setMatchOuvert(m)} className="bg-[#16A34A]/10 border border-[#16A34A]/30 rounded-2xl p-6 cursor-pointer hover:-translate-y-1 transition-all duration-300">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs bg-[#16A34A] text-white px-3 py-1 rounded-full font-bold animate-pulse">
-                    LIVE {m.minute}'
-                  </span>
+                  <span className="text-xs bg-[#16A34A] text-white px-3 py-1 rounded-full font-bold animate-pulse">LIVE {m.minute}'</span>
                   <span className="text-xs text-white/30">{m.groupe}</span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -204,9 +182,7 @@ export default function Matchs() {
                     <div className="font-bold text-sm">{m.domicile.nom}</div>
                   </div>
                   <div className="text-center px-4">
-                    <div className="text-4xl font-black text-[#FBBF24]">
-                      {m.domicile.score} - {m.exterieur.score}
-                    </div>
+                    <div className="text-4xl font-black text-[#FBBF24]">{m.domicile.score} - {m.exterieur.score}</div>
                   </div>
                   <div className="text-center flex-1">
                     <div className="text-3xl mb-1">{m.exterieur.flag}</div>
@@ -232,24 +208,17 @@ export default function Matchs() {
             .filter(m => filtre === "En direct" ? true : m.statut !== "LIVE" || filtre === "Tous")
             .filter(m => !(filtre === "Tous" && m.statut === "LIVE"))
             .map(m => (
-              <div
-                key={m.id}
-                onClick={() => setMatchOuvert(m)}
+              <div key={m.id} onClick={() => setMatchOuvert(m)}
                 className={`border rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:-translate-y-1
-                  ${m.statut === "A VENIR"
-                    ? "bg-white/5 border-white/10 hover:border-[#FBBF24]/30"
-                    : "bg-white/3 border-white/5 hover:border-white/20"}`}
+                  ${m.statut === "A VENIR" ? "bg-white/5 border-white/10 hover:border-[#FBBF24]/30" : "bg-white/3 border-white/5 hover:border-white/20"}`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <span className={`text-xs px-3 py-1 rounded-full font-bold
-                      ${m.statut === "FT" ? "bg-white/10 text-white/50" : "bg-[#FBBF24]/20 text-[#FBBF24]"}`}>
+                    <span className={`text-xs px-3 py-1 rounded-full font-bold ${m.statut === "FT" ? "bg-white/10 text-white/50" : "bg-[#FBBF24]/20 text-[#FBBF24]"}`}>
                       {m.statut === "FT" ? "Terminé" : `${m.heure}`}
                     </span>
                     <span className="text-xs text-white/30">{m.groupe}</span>
-                    {m.statut === "A VENIR" && (
-                      <span className="text-xs text-white/20">{m.date}</span>
-                    )}
+                    {m.statut === "A VENIR" && <span className="text-xs text-white/20">{m.date}</span>}
                   </div>
                   <span className="text-xs text-white/20">📍 {m.stade}</span>
                 </div>
@@ -260,9 +229,7 @@ export default function Matchs() {
                   </div>
                   <div className="px-6 text-center">
                     {m.statut === "FT" ? (
-                      <span className="text-2xl font-black text-[#FBBF24]">
-                        {m.domicile.score} - {m.exterieur.score}
-                      </span>
+                      <span className="text-2xl font-black text-[#FBBF24]">{m.domicile.score} - {m.exterieur.score}</span>
                     ) : (
                       <span className="text-white/20 font-bold">vs</span>
                     )}
@@ -277,28 +244,17 @@ export default function Matchs() {
         </div>
       </section>
 
-      {/* MODAL MATCH */}
+      {/* MODAL */}
       {matchOuvert && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur px-4"
-          onClick={() => setMatchOuvert(null)}
-        >
-          <div
-            className="bg-[#111827] border border-white/10 rounded-3xl p-8 max-w-md w-full relative"
-            onClick={e => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur px-4" onClick={() => setMatchOuvert(null)}>
+          <div className="bg-[#111827] border border-white/10 rounded-3xl p-8 max-w-md w-full relative" onClick={e => e.stopPropagation()}>
             <button onClick={() => setMatchOuvert(null)} className="absolute top-4 right-4 text-white/30 hover:text-white text-2xl">✕</button>
-
             <div className="flex items-center justify-between mb-2">
-              <span className={`text-xs px-3 py-1 rounded-full font-bold
-                ${matchOuvert.statut === "LIVE" ? "bg-[#16A34A] text-white animate-pulse" :
-                  matchOuvert.statut === "FT" ? "bg-white/10 text-white/50" : "bg-[#FBBF24]/20 text-[#FBBF24]"}`}>
-                {matchOuvert.statut === "LIVE" ? `LIVE ${matchOuvert.minute}'` :
-                  matchOuvert.statut === "FT" ? "Terminé" : matchOuvert.heure}
+              <span className={`text-xs px-3 py-1 rounded-full font-bold ${matchOuvert.statut === "LIVE" ? "bg-[#16A34A] text-white animate-pulse" : matchOuvert.statut === "FT" ? "bg-white/10 text-white/50" : "bg-[#FBBF24]/20 text-[#FBBF24]"}`}>
+                {matchOuvert.statut === "LIVE" ? `LIVE ${matchOuvert.minute}'` : matchOuvert.statut === "FT" ? "Terminé" : matchOuvert.heure}
               </span>
               <span className="text-xs text-white/30">{matchOuvert.groupe}</span>
             </div>
-
             <div className="flex items-center justify-between my-8">
               <div className="text-center flex-1">
                 <div className="text-5xl mb-2">{matchOuvert.domicile.flag}</div>
@@ -306,9 +262,7 @@ export default function Matchs() {
               </div>
               <div className="text-center px-4">
                 {matchOuvert.statut !== "A VENIR" ? (
-                  <div className="text-5xl font-black text-[#FBBF24]">
-                    {matchOuvert.domicile.score} - {matchOuvert.exterieur.score}
-                  </div>
+                  <div className="text-5xl font-black text-[#FBBF24]">{matchOuvert.domicile.score} - {matchOuvert.exterieur.score}</div>
                 ) : (
                   <div className="text-2xl font-black text-white/20">VS</div>
                 )}
@@ -318,23 +272,17 @@ export default function Matchs() {
                 <div className="font-black">{matchOuvert.exterieur.nom}</div>
               </div>
             </div>
-
             {matchOuvert.evenements.length > 0 && (
               <div>
                 <h3 className="text-xs uppercase tracking-widest text-white/30 mb-3">Événements</h3>
                 <div className="flex flex-col gap-2">
                   {matchOuvert.evenements.map((e, i) => (
-                    <div key={i} className="bg-black/30 rounded-xl px-4 py-2 text-sm text-white/70">
-                      {e}
-                    </div>
+                    <div key={i} className="bg-black/30 rounded-xl px-4 py-2 text-sm text-white/70">{e}</div>
                   ))}
                 </div>
               </div>
             )}
-
-            <div className="mt-4 text-center text-xs text-white/20">
-              📍 {matchOuvert.stade}
-            </div>
+            <div className="mt-4 text-center text-xs text-white/20">📍 {matchOuvert.stade}</div>
           </div>
         </div>
       )}
@@ -342,9 +290,7 @@ export default function Matchs() {
       {/* FOOTER */}
       <footer className="border-t border-white/10">
         <div className="max-w-5xl mx-auto px-8 py-8 flex items-center justify-between">
-          <Link href="/">
-            <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "32px", width: "auto" }} />
-          </Link>
+          <Link href="/"><img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "32px", width: "auto" }} /></Link>
           <span className="text-white/20 text-xs">© 2026 STATIX — Tous droits réservés</span>
           <span className="text-white/20 text-xs">Données fournies par API-Football</span>
         </div>

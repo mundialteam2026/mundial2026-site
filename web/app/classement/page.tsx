@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 
 const groupes = [
   {
@@ -65,34 +66,14 @@ export default function Classement() {
   const [groupeActif, setGroupeActif] = useState("Tous");
   const [filtreAfrique, setFiltreAfrique] = useState(false);
 
-  const groupesFiltres = groupeActif === "Tous"
-    ? groupes
-    : groupes.filter(g => g.nom === groupeActif);
-
-  const tendanceColor = (t: string) =>
-    t === "↑" ? "text-[#16A34A]" : t === "↓" ? "text-[#E63946]" : "text-white/30";
-
+  const groupesFiltres = groupeActif === "Tous" ? groupes : groupes.filter(g => g.nom === groupeActif);
+  const tendanceColor = (t: string) => t === "↑" ? "text-[#16A34A]" : t === "↓" ? "text-[#E63946]" : "text-white/30";
   const isAfricain = (pays: string) => africains.includes(pays);
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white font-sans">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0B0B0B]/90 backdrop-blur border-b border-white/10">
-        <Link href="/">
-          <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "40px", width: "auto" }} />
-        </Link>
-        <div className="hidden md:flex gap-8 text-sm text-white/50">
-          <Link href="/joueurs" className="hover:text-[#FBBF24] transition">Joueurs</Link>
-          <Link href="/equipes" className="hover:text-[#FBBF24] transition">Équipes</Link>
-          <Link href="/classement" className="text-[#FBBF24]">Classement</Link>
-          <Link href="/matchs" className="hover:text-[#FBBF24] transition">Matchs</Link>
-        </div>
-        <div className="flex gap-3">
-          <Link href="/inscription" className="text-white/50 text-sm font-bold px-5 py-2 rounded-full border border-white/10 hover:border-white/30 transition">S'inscrire</Link>
-          <Link href="/login" className="bg-[#FBBF24] text-black text-sm font-bold px-5 py-2 rounded-full hover:bg-yellow-300 transition">Connexion</Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* HERO */}
       <section className="pt-32 pb-12 px-8 max-w-5xl mx-auto">
@@ -113,9 +94,7 @@ export default function Classement() {
               key={g}
               onClick={() => setGroupeActif(g)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition border
-                ${groupeActif === g
-                  ? "bg-[#FBBF24] text-black border-[#FBBF24]"
-                  : "bg-white/5 text-white/50 border-white/10 hover:border-white/30"}`}
+                ${groupeActif === g ? "bg-[#FBBF24] text-black border-[#FBBF24]" : "bg-white/5 text-white/50 border-white/10 hover:border-white/30"}`}
             >
               {g}
             </button>
@@ -123,9 +102,7 @@ export default function Classement() {
           <button
             onClick={() => setFiltreAfrique(!filtreAfrique)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition border ml-auto
-              ${filtreAfrique
-                ? "bg-[#16A34A] text-white border-[#16A34A]"
-                : "bg-white/5 text-white/50 border-white/10 hover:border-white/30"}`}
+              ${filtreAfrique ? "bg-[#16A34A] text-white border-[#16A34A]" : "bg-white/5 text-white/50 border-white/10 hover:border-white/30"}`}
           >
             🌍 Afrique uniquement
           </button>
@@ -158,22 +135,13 @@ export default function Classement() {
                 {groupe.equipes
                   .filter(e => !filtreAfrique || isAfricain(e.pays))
                   .map((e, i) => (
-                    <tr
-                      key={i}
-                      className={`border-b border-white/5 transition
-                        ${isAfricain(e.pays) ? "bg-[#FBBF24]/5 hover:bg-[#FBBF24]/10" : "hover:bg-white/5"}
-                        ${e.pos <= 2 ? "border-l-2 border-l-[#16A34A]" : ""}`}
-                    >
+                    <tr key={i} className={`border-b border-white/5 transition ${isAfricain(e.pays) ? "bg-[#FBBF24]/5 hover:bg-[#FBBF24]/10" : "hover:bg-white/5"} ${e.pos <= 2 ? "border-l-2 border-l-[#16A34A]" : ""}`}>
                       <td className="px-6 py-4 text-white/40 font-bold">{e.pos}</td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <span className="text-xl">{e.flag}</span>
-                          <span className={`font-medium ${isAfricain(e.pays) ? "text-[#FBBF24]" : ""}`}>
-                            {e.pays}
-                          </span>
-                          {isAfricain(e.pays) && (
-                            <span className="text-xs bg-[#FBBF24]/20 text-[#FBBF24] px-2 py-0.5 rounded-full">AFR</span>
-                          )}
+                          <span className={`font-medium ${isAfricain(e.pays) ? "text-[#FBBF24]" : ""}`}>{e.pays}</span>
+                          {isAfricain(e.pays) && <span className="text-xs bg-[#FBBF24]/20 text-[#FBBF24] px-2 py-0.5 rounded-full">AFR</span>}
                         </div>
                       </td>
                       <td className="px-4 py-4 text-center text-white/50">{e.j}</td>
@@ -204,9 +172,7 @@ export default function Classement() {
       {/* FOOTER */}
       <footer className="border-t border-white/10">
         <div className="max-w-5xl mx-auto px-8 py-8 flex items-center justify-between">
-          <Link href="/">
-            <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "32px", width: "auto" }} />
-          </Link>
+          <Link href="/"><img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "32px", width: "auto" }} /></Link>
           <span className="text-white/20 text-xs">© 2026 STATIX — Tous droits réservés</span>
           <span className="text-white/20 text-xs">Données fournies par API-Football</span>
         </div>

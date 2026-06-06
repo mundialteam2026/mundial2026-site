@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 
 const equipes = [
   {
@@ -92,22 +93,7 @@ export default function Equipes() {
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white font-sans">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0B0B0B]/90 backdrop-blur border-b border-white/10">
-        <Link href="/">
-          <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "40px", width: "auto" }} />
-        </Link>
-        <div className="hidden md:flex gap-8 text-sm text-white/50">
-          <Link href="/joueurs" className="hover:text-[#FBBF24] transition">Joueurs</Link>
-          <Link href="/equipes" className="text-[#FBBF24]">Équipes</Link>
-          <Link href="/classement" className="hover:text-[#FBBF24] transition">Classement</Link>
-          <Link href="/matchs" className="hover:text-[#FBBF24] transition">Matchs</Link>
-        </div>
-        <div className="flex gap-3">
-          <Link href="/inscription" className="text-white/50 text-sm font-bold px-5 py-2 rounded-full border border-white/10 hover:border-white/30 transition">S'inscrire</Link>
-          <Link href="/login" className="bg-[#FBBF24] text-black text-sm font-bold px-5 py-2 rounded-full hover:bg-yellow-300 transition">Connexion</Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* HERO */}
       <section className="pt-32 pb-12 px-8 max-w-5xl mx-auto">
@@ -129,11 +115,8 @@ export default function Equipes() {
               onClick={() => setEquipeSelectionnee(e)}
               className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:border-white/30 hover:shadow-xl"
             >
-              {/* BANDE COULEUR */}
               <div className="h-2" style={{ background: e.couleur }} />
-
               <div className="p-6">
-                {/* HEADER */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="text-5xl">{e.flag}</div>
@@ -147,8 +130,6 @@ export default function Equipes() {
                     <div className="text-white/30 text-xs">pts</div>
                   </div>
                 </div>
-
-                {/* STATS */}
                 <div className="grid grid-cols-4 gap-2 mb-6 text-center">
                   <div className="bg-black/30 rounded-xl p-2">
                     <div className="font-black text-lg">{e.stats.j}</div>
@@ -167,14 +148,10 @@ export default function Equipes() {
                     <div className="text-white/30 text-xs">D</div>
                   </div>
                 </div>
-
-                {/* BUTS */}
                 <div className="flex justify-between text-sm mb-6">
                   <span className="text-white/40">Buts marqués</span>
                   <span className="font-bold text-[#FBBF24]">{e.stats.bp}</span>
                 </div>
-
-                {/* FORME */}
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-white/30 text-xs">Forme</span>
                   {e.forme.map((r, i) => (
@@ -183,8 +160,6 @@ export default function Equipes() {
                     </div>
                   ))}
                 </div>
-
-                {/* PROCHAIN MATCH */}
                 <div className="bg-white/5 rounded-xl px-4 py-2 text-xs text-white/40 flex items-center gap-2">
                   <span>⚽</span>
                   <span>{e.prochainMatch}</span>
@@ -195,19 +170,11 @@ export default function Equipes() {
         </div>
       </section>
 
-      {/* MODAL ÉQUIPE */}
+      {/* MODAL */}
       {equipeSelectionnee && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur px-4"
-          onClick={() => setEquipeSelectionnee(null)}
-        >
-          <div
-            className="bg-[#111827] border border-white/10 rounded-3xl p-8 max-w-md w-full relative overflow-y-auto max-h-[90vh]"
-            onClick={e => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur px-4" onClick={() => setEquipeSelectionnee(null)}>
+          <div className="bg-[#111827] border border-white/10 rounded-3xl p-8 max-w-md w-full relative overflow-y-auto max-h-[90vh]" onClick={e => e.stopPropagation()}>
             <button onClick={() => setEquipeSelectionnee(null)} className="absolute top-4 right-4 text-white/30 hover:text-white text-2xl">✕</button>
-
-            {/* HEADER */}
             <div className="h-1 rounded-full mb-6" style={{ background: equipeSelectionnee.couleur }} />
             <div className="flex items-center gap-4 mb-6">
               <div className="text-6xl">{equipeSelectionnee.flag}</div>
@@ -216,8 +183,6 @@ export default function Equipes() {
                 <div className="text-white/40 text-sm">Groupe {equipeSelectionnee.groupe}</div>
               </div>
             </div>
-
-            {/* STATS */}
             <div className="grid grid-cols-4 gap-2 mb-6 text-center">
               {[
                 { val: equipeSelectionnee.stats.pts, label: "Pts", color: "text-[#FBBF24]" },
@@ -231,14 +196,10 @@ export default function Equipes() {
                 </div>
               ))}
             </div>
-
-            {/* BUTS */}
             <div className="flex justify-between bg-black/30 rounded-xl p-3 mb-6 text-sm">
               <span className="text-white/40">Buts marqués / encaissés</span>
               <span className="font-bold">{equipeSelectionnee.stats.bp} / {equipeSelectionnee.stats.bc}</span>
             </div>
-
-            {/* JOUEURS */}
             <h3 className="text-xs uppercase tracking-widest text-white/40 mb-3">Joueurs clés</h3>
             <div className="flex flex-col gap-2 mb-6">
               {equipeSelectionnee.joueurs.map((j, i) => (
@@ -254,8 +215,6 @@ export default function Equipes() {
                 </div>
               ))}
             </div>
-
-            {/* FORME */}
             <div className="flex items-center gap-2 mb-6">
               <span className="text-white/30 text-xs">Forme récente</span>
               {equipeSelectionnee.forme.map((r, i) => (
@@ -264,8 +223,6 @@ export default function Equipes() {
                 </div>
               ))}
             </div>
-
-            {/* PROCHAIN MATCH */}
             <div className="bg-[#FBBF24]/10 border border-[#FBBF24]/20 rounded-xl px-4 py-3 text-sm text-[#FBBF24] flex items-center gap-2">
               <span>⚽</span>
               <span>Prochain : {equipeSelectionnee.prochainMatch}</span>
@@ -277,9 +234,7 @@ export default function Equipes() {
       {/* FOOTER */}
       <footer className="border-t border-white/10">
         <div className="max-w-5xl mx-auto px-8 py-8 flex items-center justify-between">
-          <Link href="/">
-            <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "32px", width: "auto" }} />
-          </Link>
+          <Link href="/"><img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "32px", width: "auto" }} /></Link>
           <span className="text-white/20 text-xs">© 2026 STATIX — Tous droits réservés</span>
           <span className="text-white/20 text-xs">Données fournies par API-Football</span>
         </div>
