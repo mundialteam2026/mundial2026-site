@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
 const user = {
@@ -34,6 +34,19 @@ const matchEquipe = {
 
 export default function Dashboard() {
   const [onglet, setOnglet] = useState("apercu");
+  const [menuOuvert, setMenuOuvert] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Ferme le menu si on clique ailleurs
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOuvert(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   const formeColor = (r: string) =>
     r === "V" ? "bg-[#16A34A]" : r === "N" ? "bg-white/20" : "bg-[#E63946]";
@@ -52,10 +65,59 @@ export default function Dashboard() {
           <Link href="/classement" className="hover:text-[#FBBF24] transition">Classement</Link>
           <Link href="/matchs" className="hover:text-[#FBBF24] transition">Matchs</Link>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#FBBF24] flex items-center justify-center text-black font-black text-sm cursor-pointer">
+
+        {/* AVATAR + MENU DÉROULANT */}
+        <div className="relative" ref={menuRef}>
+          <button
+            onClick={() => setMenuOuvert(!menuOuvert)}
+            className="w-9 h-9 rounded-full bg-[#FBBF24] flex items-center justify-center text-black font-black text-sm cursor-pointer hover:bg-yellow-300 transition"
+          >
             {user.avatar}
-          </div>
+          </button>
+
+          {menuOuvert && (
+            <div className="absolute right-0 top-12 w-52 bg-[#111827] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50">
+              {/* Info user */}
+              <div className="px-4 py-3 border-b border-white/10">
+                <div className="font-bold text-sm">{user.prenom} {user.nom}</div>
+                <div className="text-white/30 text-xs">{user.email}</div>
+              </div>
+              {/* Liens */}
+              <div className="py-2">
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMenuOuvert(false)}
+                  className="flex items-center gap-3 px-4 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white transition"
+                >
+                  <span>🏠</span> Dashboard
+                </Link>
+                <Link
+                  href="/dashboard/profil"
+                  onClick={() => setMenuOuvert(false)}
+                  className="flex items-center gap-3 px-4 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white transition"
+                >
+                  <span>👤</span> Mon profil
+                </Link>
+                <Link
+                  href="/dashboard/favoris"
+                  onClick={() => setMenuOuvert(false)}
+                  className="flex items-center gap-3 px-4 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white transition"
+                >
+                  <span>❤️</span> Mes favoris
+                </Link>
+              </div>
+              {/* Déconnexion */}
+              <div className="border-t border-white/10 py-2">
+                <Link
+                  href="/login"
+                  onClick={() => setMenuOuvert(false)}
+                  className="flex items-center gap-3 px-4 py-2 text-sm text-[#E63946] hover:bg-[#E63946]/10 transition"
+                >
+                  <span>🚪</span> Se déconnecter
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -102,8 +164,6 @@ export default function Dashboard() {
         {/* APERÇU */}
         {onglet === "apercu" && (
           <div className="flex flex-col gap-8">
-
-            {/* STATS RAPIDES */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
                 { label: "Joueurs suivis", val: favoris.length, color: "text-[#FBBF24]", icon: "⭐" },
@@ -119,10 +179,7 @@ export default function Dashboard() {
               ))}
             </div>
 
-            {/* FAVORIS RAPIDES + ALERTES */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-              {/* FAVORIS */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-black">❤️ Mes favoris</h2>
@@ -149,7 +206,6 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* ALERTES */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-black">🔔 Alertes récentes</h2>
@@ -164,10 +220,8 @@ export default function Dashboard() {
                   ))}
                 </div>
               </div>
-
             </div>
 
-            {/* MON ÉQUIPE */}
             <div className="bg-gradient-to-r from-[#FBBF24]/10 to-transparent border border-[#FBBF24]/20 rounded-2xl p-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
@@ -193,7 +247,6 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-
           </div>
         )}
 
