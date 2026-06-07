@@ -39,9 +39,9 @@ export default function Login() {
               className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none focus:border-[#FBBF24]/50 transition text-sm" />
           </div>
           <div className="text-right">
-            <span className="text-xs text-[#FBBF24]/70 cursor-pointer hover:text-[#FBBF24] transition">
+            <Link href="/mot-de-passe-oublie" className="text-xs text-[#FBBF24]/70 hover:text-[#FBBF24] transition">
               Mot de passe oublié ?
-            </span>
+            </Link>
           </div>
           <button className="w-full bg-[#FBBF24] text-black font-black py-3 rounded-xl hover:bg-yellow-300 transition text-sm tracking-widest uppercase mt-2">
             Se connecter

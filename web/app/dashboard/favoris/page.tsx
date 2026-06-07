@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "../../components/Navbar";
 
 const tousJoueurs = [
   { id: 1, nom: "Sébastien Haller", pays: "Côte d'Ivoire", flag: "🇨🇮", poste: "Attaquant", buts: 4, passes: 2, cartons: 1, photo: "SH" },
@@ -44,23 +45,7 @@ export default function Favoris() {
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white font-sans">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0B0B0B]/90 backdrop-blur border-b border-white/10">
-        <Link href="/">
-          <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "40px", width: "auto" }} />
-        </Link>
-        <div className="hidden md:flex gap-8 text-sm text-white/50">
-          <Link href="/joueurs" className="hover:text-[#FBBF24] transition">Joueurs</Link>
-          <Link href="/equipes" className="hover:text-[#FBBF24] transition">Équipes</Link>
-          <Link href="/classement" className="hover:text-[#FBBF24] transition">Classement</Link>
-          <Link href="/matchs" className="hover:text-[#FBBF24] transition">Matchs</Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#FBBF24] flex items-center justify-center text-black font-black text-sm">
-            JM
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* NOTIFICATION */}
       {notification && (
@@ -103,10 +88,7 @@ export default function Favoris() {
                         <div className="text-white/40 text-xs">{j.flag} {j.poste}</div>
                       </div>
                     </div>
-                    <button
-                      onClick={() => toggleFavori(j.id, j.nom)}
-                      className="text-[#E63946] text-lg hover:scale-125 transition-transform"
-                    >
+                    <button onClick={() => toggleFavori(j.id, j.nom)} className="text-[#E63946] text-lg hover:scale-125 transition-transform">
                       ❤️
                     </button>
                   </div>
@@ -147,12 +129,9 @@ export default function Favoris() {
           </div>
           <div className="flex flex-col gap-3">
             {joueursFiltres.map(j => (
-              <div
-                key={j.id}
+              <div key={j.id}
                 className={`flex items-center justify-between border rounded-2xl px-6 py-4 transition
-                  ${isFavori(j.id)
-                    ? "bg-[#FBBF24]/5 border-[#FBBF24]/20"
-                    : "bg-white/5 border-white/10 hover:border-white/20"}`}
+                  ${isFavori(j.id) ? "bg-[#FBBF24]/5 border-[#FBBF24]/20" : "bg-white/5 border-white/10 hover:border-white/20"}`}
               >
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center font-black text-white/30 text-sm">
@@ -168,12 +147,9 @@ export default function Favoris() {
                     <span className="text-[#FBBF24] font-black">{j.buts} ⚽</span>
                     <span className="text-[#16A34A] font-black">{j.passes} 🅰️</span>
                   </div>
-                  <button
-                    onClick={() => toggleFavori(j.id, j.nom)}
+                  <button onClick={() => toggleFavori(j.id, j.nom)}
                     className={`px-4 py-2 rounded-full text-xs font-bold transition
-                      ${isFavori(j.id)
-                        ? "bg-[#E63946]/10 text-[#E63946] border border-[#E63946]/20 hover:bg-[#E63946]/20"
-                        : "bg-[#FBBF24] text-black hover:bg-yellow-300"}`}
+                      ${isFavori(j.id) ? "bg-[#E63946]/10 text-[#E63946] border border-[#E63946]/20 hover:bg-[#E63946]/20" : "bg-[#FBBF24] text-black hover:bg-yellow-300"}`}
                   >
                     {isFavori(j.id) ? "✕ Retirer" : "+ Ajouter"}
                   </button>

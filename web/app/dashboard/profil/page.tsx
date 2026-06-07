@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "../../components/Navbar";
 
 export default function Profil() {
   const [form, setForm] = useState({
@@ -31,23 +32,7 @@ export default function Profil() {
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white font-sans">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0B0B0B]/90 backdrop-blur border-b border-white/10">
-        <Link href="/">
-          <img src="/statix_logo_web.svg" alt="STATIX" style={{ height: "40px", width: "auto" }} />
-        </Link>
-        <div className="hidden md:flex gap-8 text-sm text-white/50">
-          <Link href="/joueurs" className="hover:text-[#FBBF24] transition">Joueurs</Link>
-          <Link href="/equipes" className="hover:text-[#FBBF24] transition">Équipes</Link>
-          <Link href="/classement" className="hover:text-[#FBBF24] transition">Classement</Link>
-          <Link href="/matchs" className="hover:text-[#FBBF24] transition">Matchs</Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#FBBF24] flex items-center justify-center text-black font-black text-sm">
-            JM
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="pt-24 px-8 max-w-2xl mx-auto pb-24">
 
@@ -77,85 +62,43 @@ export default function Profil() {
 
         {/* FORMULAIRE */}
         <div className="bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col gap-6">
-
           <h2 className="font-black text-lg border-b border-white/10 pb-4">
             ✏️ Modifier mes informations
           </h2>
-
-          {/* Prénom + Nom */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <label className="text-white/40 text-xs uppercase tracking-widest">Prénom</label>
-              <input
-                type="text"
-                name="prenom"
-                value={form.prenom}
-                onChange={handleChange}
-                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm"
-              />
+              <input type="text" name="prenom" value={form.prenom} onChange={handleChange}
+                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm" />
             </div>
             <div className="flex flex-col gap-2">
               <label className="text-white/40 text-xs uppercase tracking-widest">Nom</label>
-              <input
-                type="text"
-                name="nom"
-                value={form.nom}
-                onChange={handleChange}
-                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm"
-              />
+              <input type="text" name="nom" value={form.nom} onChange={handleChange}
+                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm" />
             </div>
           </div>
-
-          {/* Pseudo */}
           <div className="flex flex-col gap-2">
             <label className="text-white/40 text-xs uppercase tracking-widest">Pseudo</label>
-            <input
-              type="text"
-              name="pseudo"
-              value={form.pseudo}
-              onChange={handleChange}
-              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm"
-            />
+            <input type="text" name="pseudo" value={form.pseudo} onChange={handleChange}
+              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm" />
           </div>
-
-          {/* Email */}
           <div className="flex flex-col gap-2">
             <label className="text-white/40 text-xs uppercase tracking-widest">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm"
-            />
+            <input type="email" name="email" value={form.email} onChange={handleChange}
+              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm" />
           </div>
-
-          {/* Pays favori */}
           <div className="flex flex-col gap-2">
             <label className="text-white/40 text-xs uppercase tracking-widest">Mon pays africain favori</label>
-            <select
-              name="pays"
-              value={form.pays}
-              onChange={handleChange}
-              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm"
-            >
-              {pays.map(p => (
-                <option key={p} value={p} className="bg-[#0B0B0B]">{p}</option>
-              ))}
+            <select name="pays" value={form.pays} onChange={handleChange}
+              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FBBF24]/50 transition text-sm">
+              {pays.map(p => <option key={p} value={p} className="bg-[#0B0B0B]">{p}</option>)}
             </select>
           </div>
-
-          {/* Bouton sauvegarder */}
-          <button
-            onClick={handleSave}
+          <button onClick={handleSave}
             className={`w-full py-3 rounded-xl font-black text-sm tracking-widest uppercase transition
-              ${sauvegarde
-                ? "bg-[#16A34A] text-white"
-                : "bg-[#FBBF24] text-black hover:bg-yellow-300"}`}
-          >
+              ${sauvegarde ? "bg-[#16A34A] text-white" : "bg-[#FBBF24] text-black hover:bg-yellow-300"}`}>
             {sauvegarde ? "✅ Sauvegardé !" : "Sauvegarder les modifications"}
           </button>
-
         </div>
 
         {/* CHANGER MOT DE PASSE */}
