@@ -1,59 +1,43 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useState } from "react";
 
-export default function JoueurPage() {
-  const params = useParams();
- const [joueur, setJoueur] = useState<any>(null);
+export default function Home() {
+  const [nomRecherche, setNomRecherche] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<any[]>([]);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/joueurs/" + params.id + "/")
-      .then((res) => res.json())
-      .then((data) => setJoueur(data));
-  }, [params.id]);
-
-  if (!joueur) return <p className="text-white p-8">Chargement...</p>;
+  async function handleNom(valeur: string) {
+    setNomRecherche(valeur);
+    if (valeur.length >= 2) {
+      const res = await fetch("http://127.0.0.1:8000/api/joueurs/?nom=" + valeur);
+      const data = await res.json();
+      setSuggestions(data);
+    } else {
+      setSuggestions([]);
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-[#0B0B0B] text-white">
+    <div className="flex flex-col min-h-screen bg-[#0B0B0B] font-sans">
       <nav className="flex items-center justify-between px-8 py-5 border-b border-white/10">
         <h1 className="text-3xl font-bold tracking-widest text-white">
           STATI<span className="text-[#FBBF24]">X</span>
         </h1>
-        <a href="/" className="text-white/50 hover:text-white">Accueil</a>
-      </nav>
-      <div className="max-w-3xl mx-auto px-6 py-16">
-        <div className="bg-white/5 rounded-2xl p-8">
-          <div className="flex items-center gap-6 mb-8">
-            <div className="w-24 h-24 bg-[#FBBF24] rounded-full flex items-center justify-center text-4xl">
-              ⚽
-            </div>
-            <div>
-              <h2 className="text-3xl font-bold">{joueur.nom}</h2>
-              <p className="text-[#FBBF24] text-lg">{joueur.pays} · {joueur.poste}</p>
-              <p className="text-white/50">{joueur.equipe}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            <div className="bg-white/10 rounded-xl p-4 text-center">
-              <p className="text-3xl font-bold text-[#FBBF24]">{joueur.buts}</p>
-              <p className="text-white/50 mt-1">Buts</p>
-            </div>
-            <div className="bg-white/10 rounded-xl p-4 text-center">
-              <p className="text-3xl font-bold text-[#FBBF24]">{joueur.passes}</p>
-              <p className="text-white/50 mt-1">Passes</p>
-            </div>
-            <div className="bg-white/10 rounded-xl p-4 text-center">
-              <p className="text-3xl font-bold text-[#FBBF24]">{joueur.cartons_jaunes}</p>
-              <p className="text-white/50 mt-1">Cartons jaunes</p>
-            </div>
-            <div className="bg-white/10 rounded-xl p-4 text-center">
-              <p className="text-3xl font-bold text-[#FBBF24]">{joueur.minutes_jouees}</p>
-              <p className="text-white/50 mt-1">Minutes</p>
-            </div>
-          </div>
+        <div className="flex gap-6 text-sm text-white/50">
+          <span className="cursor-pointer hover:text-white">Joueurs</span>
+          <span className="cursor-pointer hover:text-white">Equipes</span>
+          <span className="cursor-pointer hover:text-white">Classement</span>
+          <span className="cursor-pointer hover:text-white">Matchs</span>
         </div>
-      </div>
-    </div>
-  );
-}
+      </nav>
+      <main className="flex flex-col items-center justify-center flex-1 text-center px-8 py-24 gap-6">
+        <div className="text-xs tracking-widest text-[#FBBF24] uppercase">
+          World Cup 2026
+        </div>
+        <h2 className="text-5xl font-bold text-white leading-tight">
+          Suivez les stats de <br />
+          <span className="text-[#FBBF24]">vos joueurs africains</span>
+        </h2>
+        <p className="text-white/50 max-w-md text-lg">
+          Buts, passes decisives, cartons en temps reel durant le mondial 2026.
+        </p>
+        <div className="w-full max-w-md
