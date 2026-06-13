@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 
 export default function JoueurPage() {
   const params = useParams();
-  const [joueur, setJoueur] = useState(null);
+ const [joueur, setJoueur] = useState<any>(null);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/joueurs/" + params.id + "/")
