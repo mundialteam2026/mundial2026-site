@@ -53,8 +53,7 @@ export default function Home() {
               {suggestions.map(function(joueur, index) {
                 return (
                   
-                    key={index}
-                    href={"/joueur/" + joueur.id}
+                    <a key={index} href={"/joueur/" + joueur.id}
                     className="flex items-center justify-between px-6 py-4 hover:bg-white/10 cursor-pointer border-b border-white/10 last:border-0"
                   >
                     <div className="text-left">
