@@ -2,10 +2,10 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [nomRecherche, setNomRecherche] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+  const [nomRecherche, setNomRecherche] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<any[]>([]);
 
-  async function handleNom(valeur) {
+  async function handleNom(valeur: string) {
     setNomRecherche(valeur);
     if (valeur.length >= 2) {
       const res = await fetch("http://127.0.0.1:8000/api/joueurs/?nom=" + valeur);
@@ -50,10 +50,11 @@ export default function Home() {
           />
           {suggestions.length > 0 && (
             <div className="absolute w-full bg-[#1a1a1a] rounded-2xl mt-2 overflow-hidden z-10">
-              {suggestions.map(function(joueur, index) {
+              {suggestions.map(function(joueur: any, index: number) {
                 return (
                   
-                    <a key={index} href={"/joueur/" + joueur.id}
+                    key={index}
+                    href={"/joueur/" + joueur.id}
                     className="flex items-center justify-between px-6 py-4 hover:bg-white/10 cursor-pointer border-b border-white/10 last:border-0"
                   >
                     <div className="text-left">
