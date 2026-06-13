@@ -1,24 +1,11 @@
 "use client";
 import { useState } from "react";
 
-interface Joueur {
-  id: number;
-  nom: string;
-  pays: string;
-  poste: string;
-  equipe: string;
-  buts: number;
-  passes: number;
-  cartons_jaunes: number;
-  cartons_rouges: number;
-  minutes_jouees: number;
-}
-
 export default function Home() {
   const [nomRecherche, setNomRecherche] = useState("");
-  const [suggestions, setSuggestions] = useState<Joueur[]>([]);
+  const [suggestions, setSuggestions] = useState([]);
 
-  const handleNom = async (valeur: string) => {
+  async function handleNom(valeur) {
     setNomRecherche(valeur);
     if (valeur.length >= 2) {
       const res = await fetch("http://127.0.0.1:8000/api/joueurs/?nom=" + valeur);
@@ -27,7 +14,7 @@ export default function Home() {
     } else {
       setSuggestions([]);
     }
-  };
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0B0B0B] font-sans">
@@ -63,19 +50,21 @@ export default function Home() {
           />
           {suggestions.length > 0 && (
             <div className="absolute w-full bg-[#1a1a1a] rounded-2xl mt-2 overflow-hidden z-10">
-              {suggestions.map((joueur) => (
-                
-                  key={joueur.id}
-                  href={"/joueur/" + joueur.id}
-                  className="flex items-center justify-between px-6 py-4 hover:bg-white/10 cursor-pointer border-b border-white/10 last:border-0"
-                >
-                  <div className="text-left">
-                    <p className="text-white font-bold">{joueur.nom}</p>
-                    <p className="text-white/50 text-sm">{joueur.poste} - {joueur.equipe}</p>
-                  </div>
-                  <span className="text-[#FBBF24] text-sm">{joueur.pays}</span>
-                </a>
-              ))}
+              {suggestions.map(function(joueur, index) {
+                return (
+                  
+                    key={index}
+                    href={"/joueur/" + joueur.id}
+                    className="flex items-center justify-between px-6 py-4 hover:bg-white/10 cursor-pointer border-b border-white/10 last:border-0"
+                  >
+                    <div className="text-left">
+                      <p className="text-white font-bold">{joueur.nom}</p>
+                      <p className="text-white/50 text-sm">{joueur.poste} - {joueur.equipe}</p>
+                    </div>
+                    <span className="text-[#FBBF24] text-sm">{joueur.pays}</span>
+                  </a>
+                );
+              })}
             </div>
           )}
         </div>
